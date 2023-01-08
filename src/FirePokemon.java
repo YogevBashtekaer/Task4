@@ -7,11 +7,30 @@ final int TAKES_LIFE = 1;
     public FirePokemon(String name,int hp,int attackPoint,boolean abilityToDevelop,int level,Attack[] attacks){
         super(name,hp,attackPoint,abilityToDevelop,level,attacks);
     }
-    public void attack(Pokemon other){
+    /*public void attack(Pokemon other){
         super.attack(other);
         if(checkForSelfDamage()== true){
             int selfDamage = calculateSelfDamage();
             lossSelfLife(selfDamage);
+        }
+    }
+     */
+    public void attack(Pokemon other) {
+        super.attack(other);
+        int numberOfAttack = getAttackFromUser() - TO_CORRECT_NUMBER_OF_ATTACK;
+        if (this.getAttacks()[numberOfAttack].checkIfCanAttack(this.getCurrentAttackPoint())) {
+            int damage = this.getAttacks()[numberOfAttack].calculateDamage(
+                    this.getAttacks()[numberOfAttack].getMaxDamage(),this.getAttacks()[numberOfAttack].getMinDamage());
+           if(this.getTripleAttackPower()){
+               damage = calculateTripleAttackPower(damage);
+           }
+            lossLife(other, damage);
+            lossAttackPoint(this.getAttacks()[numberOfAttack].getCost());
+            if(checkForSelfDamage() == true){
+                int selfDamage = calculateSelfDamage();
+                System.out.println("you lost self hp");
+                lossSelfLife(selfDamage);
+            }
         }
     }
     public void lossSelfLife(int selfDamage){

@@ -14,10 +14,10 @@ public class Attack {
         this.minDamage = minDamage;
     }
 
-    public int calculateDamage() {
+    public int calculateDamage(int maxDamage,int minDamage) {
         Random rand = new Random();
-        int damage = rand.nextInt(this.maxDamage + 1 - this.minDamage);
-        damage += this.minDamage;
+        int damage = rand.nextInt(maxDamage + 1 - minDamage);
+        damage += minDamage;
         return damage;
     }
     public int getCost(){
@@ -27,9 +27,18 @@ public class Attack {
         boolean canAttack = true;
         if (this.cost > attackPoint) {
             canAttack = false;
+            System.out.println("you dont have enough attack point");
         }
         return canAttack;
     }
+
+    public int getMaxDamage() {
+        return maxDamage;
+    }
+    public int getMinDamage(){
+        return this.minDamage;
+    }
+
     String getListOfAttack(Attack[] attacks) {
         String listOfAttack = "";
         for (int i = 0; i < attacks.length; i++) {
